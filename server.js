@@ -1,0 +1,20 @@
+require('dotenv').config();
+const express=require('express'),mongoose=require('mongoose'),jwt=require('jsonwebtoken'),multer=require('multer'),cors=require('cors'),path=require('path'),fs=require('fs');
+const app=express(),PORT=process.env.PORT||3000,uploadDir=path.join(__dirname,'uploads');
+fs.mkdirSync(uploadDir,{recursive:true});
+app.use(cors());app.use(express.json());app.use('/uploads',express.static(uploadDir));app.use(express.static(__dirname));
+const storage=multer.diskStorage({destination:uploadDir,filename:(_,f,cb)=>cb(null,Date.now()+'-'+f.originalname.replace(/[^a-z0-9.\-_]/gi,'_'))});
+const upload=multer({storage,limits:{fileSize:100*1024*1024},fileFilter:(_,f,cb)=>cb(null,/^(video|image)\//.test(f.mimetype))});
+const News=mongoose.model('News',new mongoose.Schema({title:{type:String,required:true},summary:{type:String,required:true},body:{type:String,required:true},category:{type:String,required:true},platform:String,videoUrl:String,imageUrl:String,status:{type:String,enum:['published','draft'],default:'published'},createdAt:{type:Date,default:Date.now}},{versionKey:false}));
+const Category=mongoose.model('Category',new mongoose.Schema({name:{type:String,unique:true,required:true}},{versionKey:false}));
+const admin=(req,res,next)=>{try{req.user=jwt.verify((req.headers.authorization||'').replace('Bearer ',''),process.env.JWT_SECRET);next()}catch{res.status(401).json({message:'Oturum geçersiz.'})}};
+app.post('/api/auth/login',(req,res)=>{const {email,password}=req.body;if(email?.toLowerCase()!==process.env.ADMIN_EMAIL?.toLowerCase()||password!==process.env.ADMIN_PASSWORD)return res.status(401).json({message:'E-posta veya şifre yanlış.'});res.json({token:jwt.sign({role:'admin'},process.env.JWT_SECRET,{expiresIn:'8h'})})});
+app.get('/api/news',async(req,res)=>{const q={status:'published'};if(req.query.category)q.category=req.query.category;res.json(await News.find(q).sort({createdAt:-1}).lean())});
+app.get('/api/admin/news',admin,async(_,res)=>res.json(await News.find().sort({createdAt:-1}).lean()));
+app.post('/api/news',admin,upload.fields([{name:'videoFile',maxCount:1},{name:'imageFile',maxCount:1}]),async(req,res)=>{const v=req.files?.videoFile?.[0],i=req.files?.imageFile?.[0];if(!v&&!req.body.videoUrl)return res.status(400).json({message:'Video bağlantısı veya dosyası gerekli.'});res.status(201).json(await News.create({...req.body,videoUrl:v?'/uploads/'+v.filename:req.body.videoUrl,imageUrl:i?'/uploads/'+i.filename:req.body.imageUrl||'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=900&q=80'}))});
+app.delete('/api/news/:id',admin,async(req,res)=>{await News.findByIdAndDelete(req.params.id);res.status(204).end()});
+app.get('/api/categories',async(_,res)=>res.json(await Category.find().sort({name:1}).lean()));
+app.post('/api/categories',admin,async(req,res)=>{try{res.status(201).json(await Category.create({name:req.body.name?.trim()}))}catch{res.status(400).json({message:'Bu kategori zaten var.'})}});
+app.delete('/api/categories/:id',admin,async(req,res)=>{await Category.findByIdAndDelete(req.params.id);res.status(204).end()});
+async function start(){await mongoose.connect(process.env.MONGODB_URI);if(await Category.countDocuments()===0)await Category.insertMany(['Gündem','Ekonomi','Dünya','Spor','Teknoloji'].map(name=>({name})));app.listen(PORT,()=>console.log('Beyhan Haber: http://localhost:'+PORT))}
+start().catch(e=>{console.error('MongoDB bağlantısı kurulamadı:',e.message);process.exit(1)});
