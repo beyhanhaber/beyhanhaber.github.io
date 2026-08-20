@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Beyhan Haber - Video odaklı güncel haberler" />
-    <title>Beyhan Haber | Gündemin Nabzı</title>
+    <meta name="description" content="SzrBeyhanGzt - Video odaklı güncel haberler" />
+    <title>SzrBeyhanGzt | Gündemin Nabzı</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
@@ -12,9 +12,9 @@
     <link rel="stylesheet" href="admin.css" />
   </head>
   <body>
-    <div class="breaking-bar"><span>SON DAKİKA</span><p>Gündem, ekonomi ve dünyadan en yeni gelişmeler Beyhan Haber'de.</p><time id="liveDate"></time></div>
+    <div class="breaking-bar"><span>SON DAKİKA</span><p>Gündem, ekonomi ve dünyadan en yeni gelişmeler SzrBeyhanGzt'de.</p><time id="liveDate"></time></div>
     <header class="site-header">
-      <a class="brand" href="#top" aria-label="Beyhan Haber ana sayfa"><span>BEYHAN</span> HABER<i></i></a>
+      <a class="brand" href="#top" aria-label="Beyhan Haber ana sayfa"><span>SzrBeyhan</span>Gzt<i></i></a>
       <nav aria-label="Ana menü" id="mainNav">
         <a class="active" href="#top">Ana Sayfa</a>
         <a href="#gundem" data-category="Gündem">Gündem</a>
@@ -38,17 +38,17 @@
         <div class="news-grid" id="categoryGrid"></div>
       </section>
 
-      <section class="dark-section" id="gundem"><div><p class="eyebrow light">BEYHAN HABER</p><h2>Gürültüyü değil,<br><em>gerçeği</em> takip edin.</h2></div><p>Her haberi anlaşılır, özenli ve izleyicinin zamanına saygılı biçimde sunmak için buradayız.</p></section>
+      <section class="dark-section" id="gundem"><div><p class="eyebrow light">SzrBeyhanGzt</p><h2>Gürültüyü değil,<br><em>gerçeği</em> takip edin.</h2></div><p>Her haberi anlaşılır, özenli ve izleyicinin zamanına saygılı biçimde sunmak için buradayız.</p></section>
     </main>
 
-    <footer><a class="brand footer-brand" href="#top"><span>BEYHAN</span> HABER<i></i></a><p>Gündemin güvenilir video haber adresi.</p><small>© <span id="year"></span> Beyhan Haber · Developed by E.E.K.</small></footer>
+    <footer><a class="brand footer-brand" href="#top"><span>SzrBeyhan</span> GZT<i></i></a><p>Gündemin güvenilir video haber adresi.</p><small>© <span id="year"></span> SzrBeyhanGzt · Developed by E.E.K.</small></footer>
 
     <div class="modal" id="adminModal" aria-hidden="true">
       <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle">
         <button class="close-button" id="closePanel" aria-label="Paneli kapat">×</button>
         <div id="authView"></div>
         <div id="dashboardView" hidden>
-          <div class="panel-top"><div><p class="eyebrow">BEYHAN HABER CMS</p><h2 id="panelTitle">Yönetim merkezi</h2></div><button id="logout" class="logout">Çıkış yap</button></div>
+          <div class="panel-top"><div><p class="eyebrow">SzrBeyhanGzt</p><h2 id="panelTitle">Yönetim merkezi</h2></div><button id="logout" class="logout">Çıkış yap</button></div>
           <div class="admin-tabs"><button class="tab active" data-tab="overview">Genel Bakış</button><button class="tab" data-tab="create">Haber Ekle</button><button class="tab" data-tab="manage">Haberler</button><button class="tab" data-tab="settings">Ayarlar</button></div>
           <section class="tab-content" id="overview"><div class="stats"><div><b id="articleCount">0</b><span>Toplam haber</span></div><div><b id="categoryCount">0</b><span>Kategori</span></div><div><b id="publishedCount">0</b><span>Yayında</span></div></div><h3>Hızlı başlangıç</h3><p class="form-intro">Yeni bir video haber ekleyin veya mevcut haberlerinizi yönetin. Haberler, yayınlandığı anda ana sayfada görünür.</p><button class="publish-button quick-create">Yeni haber ekle <span>→</span></button></section>
           <section class="tab-content" id="create" hidden><p class="form-intro">İçeriğinizin platformunu seçin, video bağlantısını ekleyin ve kategorisini belirleyin.</p><form id="newsForm">
@@ -65,7 +65,7 @@
             <button class="publish-button" type="submit">Haberi yayınla <span>→</span></button><p class="form-note">Yerel video dosyaları bu prototipte yalnızca açık tarayıcı oturumunda oynatılır.</p>
           </form></section>
           <section class="tab-content" id="manage" hidden><div id="manageList" class="manage-list"></div></section>
-          <section class="tab-content" id="settings" hidden><h3>Kategoriler</h3><p class="form-intro">Haber eklerken seçebileceğiniz kategorileri yönetin.</p><div id="categoryList" class="category-list"></div><form id="categoryForm" class="inline-form"><input id="newCategory" maxlength="24" placeholder="Yeni kategori adı" required><button type="submit">Ekle</button></form><hr><h3>Site görünümü</h3><p class="form-intro">Site adı: <strong>Beyhan Haber</strong><br>Alt bilgi: <strong>Developed by E.E.K.</strong></p></section>
+          <section class="tab-content" id="settings" hidden><h3>Kategoriler</h3><p class="form-intro">Haber eklerken seçebileceğiniz kategorileri yönetin.</p><div id="categoryList" class="category-list"></div><form id="categoryForm" class="inline-form"><input id="newCategory" maxlength="24" placeholder="Yeni kategori adı" required><button type="submit">Ekle</button></form><hr><h3>Site görünümü</h3><p class="form-intro">Site adı: <strong>SzrBeyhanGzt</strong><br>Alt bilgi: <strong>Developed by E.E.K.</strong></p></section>
         </div>
       </div>
     </div>
